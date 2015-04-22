@@ -1,2 +1,2 @@
 # cryptex
-Cryptex is a simple command-line encryption tool.
+cryptex is a simple command-line encryption tool.
