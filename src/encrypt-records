@@ -1,0 +1,16 @@
+#!/usr/bin/zsh
+
+# Edit the following line to point to your (*.txt) records.
+plaintext_files=($HOME/RECORD_DIR/*.txt(N))
+if [[ -z $plaintext_files ]]
+then
+  echo "No files found to encode."
+  exit 0
+fi
+for i in $plaintext_files
+do
+  # Change USER_ID below to the user id for the key you wish to encrypt with.
+  gpg -e -r USER_ID -o "${i%txt}gpg" "$i"
+  shred -xu $i
+done
+echo "Encryption complete."

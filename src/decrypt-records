@@ -1,0 +1,21 @@
+#!/usr/bin/zsh
+
+# Edit the following line to point to your encrypted records.
+encrypted_files=($HOME/RECORD_DIR/*.gpg(N))
+if [[ -z $encrypted_files ]]
+then
+  echo "No files found to decode."
+  exit 0
+fi
+for i in $encrypted_files
+do
+  # The following line only work if the private key corresponding to
+  # the public key used to encrypt the records. Make sure you understand
+  # how GnuPG works before using this script!
+  gpg -d -o "${i%gpg}txt" "$i" && rm $i
+done
+printf "\nDecryption complete.\n"
+# Change the following line if the encryption script is somewhere else.
+script_path="$(cd $(dirname $0) ; pwd -P)/encrypt-records"
+echo "zsh $script_path" | at -M now + 15 minutes 1> /dev/null 2>&1
+echo "Re-encrypting in 15 minutes."

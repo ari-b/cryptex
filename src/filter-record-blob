@@ -1,0 +1,8 @@
+#!/usr/bin/zsh
+
+# Change this to the location of your blob file
+blob_file=$HOME/RECORD_DIR/BLOB.gpb # Make sure the extension is not .gpg!
+if [[ -e $blob_file ]]
+then
+    gpg --batch -q -d $blob_file | grep $1 | sed -n -e "s/$1 //p"
+fi
